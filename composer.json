@@ -1,0 +1,21 @@
+{
+    "name": "identifydigital/laravel-roles",
+    "authors": [
+        {
+            "name": "Josh Thackeray",
+            "email": "josh@identifywebdesign.co.uk"
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "IdentifyDigital\\Roles\\RolesServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "IdentifyDigital\\Roles\\": "src/"
+        }
+    }
+}
