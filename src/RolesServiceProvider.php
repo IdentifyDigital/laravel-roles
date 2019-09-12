@@ -3,6 +3,7 @@
 namespace IdentifyDigital\Roles;
 
 use IdentifyDigital\Roles\Console\Commands\CreateRole;
+use IdentifyDigital\Roles\Console\Commands\SyncRoles;
 use Illuminate\Support\ServiceProvider;
 
 class RolesServiceProvider extends ServiceProvider
@@ -16,6 +17,14 @@ class RolesServiceProvider extends ServiceProvider
     {
         //Loading the package migrations
         $this->loadMigrationsFrom(__DIR__.'/Migrations');
+
+        //Publishing to packages config
+        $this->publishes([
+            __DIR__.'/Config/roles.php' => config_path('identifydigital.php'),
+        ]);
+        $this->mergeConfigFrom(
+            __DIR__.'/Config/roles.php', 'identifydigital.roles'
+        );
 
         //Assigning the commands to the Kernel
         if ($this->app->runningInConsole()) {
@@ -31,7 +40,8 @@ class RolesServiceProvider extends ServiceProvider
     private function __registerCommands()
     {
         $this->commands([
-            CreateRole::class
+            CreateRole::class,
+            SyncRoles::class
         ]);
     }
 }
