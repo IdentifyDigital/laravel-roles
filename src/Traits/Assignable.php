@@ -15,7 +15,8 @@ trait Assignable
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'role_relation', 'relation_id')
-            ->withPivot('relation', 'relation_id');
+            ->withPivot('relation', 'relation_id')
+            ->wherePivot('relation', self::class);
     }
 
     /**
