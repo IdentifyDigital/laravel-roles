@@ -18,4 +18,14 @@ class RoleRepository extends Repository implements RoleRepositoryInterface
     {
         return Role::class;
     }
+
+    /**
+     * Returns a collection of the assignable roles.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function getAllAssignableRoles()
+    {
+        return $this->model->where('assignable', 1)->orderBy('name', 'DESC')->get();
+    }
 }
