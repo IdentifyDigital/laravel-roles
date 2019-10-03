@@ -2,10 +2,11 @@
 
 namespace IdentifyDigital\Roles\Repositories;
 
+use IdentifyDigital\Repositories\Repositories\Contracts\RoleRepositoryInterface;
 use IdentifyDigital\Repositories\Repository;
 use IdentifyDigital\Roles\Models\Role;
 
-class RoleRepositories extends Repository
+class RoleRepository extends Repository implements RoleRepositoryInterface
 {
 
     /**
