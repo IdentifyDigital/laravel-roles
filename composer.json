@@ -1,11 +1,16 @@
 {
     "name": "identifydigital/laravel-roles",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "authors": [
         {
             "name": "Josh Thackeray",
             "email": "josh@identifywebdesign.co.uk"
         }
     ],
+    "require": {
+        "identifydigital/laravel-repositories": "dev-master"
+    },
     "extra": {
         "laravel": {
             "providers": [
