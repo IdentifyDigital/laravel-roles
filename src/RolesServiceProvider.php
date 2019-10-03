@@ -2,7 +2,7 @@
 
 namespace IdentifyDigital\Roles;
 
-use IdentifyDigital\Repositories\Repositories\Contracts\RoleRepositoryInterface;
+use IdentifyDigital\Roles\Repositories\Contracts\RoleRepositoryInterface;
 use IdentifyDigital\Roles\Console\Commands\CreateRole;
 use IdentifyDigital\Roles\Console\Commands\SyncRoles;
 use IdentifyDigital\Roles\Repositories\RoleRepository;

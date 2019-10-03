@@ -1,6 +1,6 @@
 <?php
 
-namespace IdentifyDigital\Repositories\Repositories\Contracts;
+namespace IdentifyDigital\Roles\Repositories\Contracts;
 
 use IdentifyDigital\Repositories\RepositoryInterface;
 
