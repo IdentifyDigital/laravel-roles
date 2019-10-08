@@ -87,6 +87,21 @@ trait Assignable
     }
 
     /**
+     * Returns the name of the first assignable role attached to the model.
+     *
+     * @return mixed
+     */
+    public function getRoleAttribute()
+    {
+        $assignable_role = $this->roles()->where('assignable', 1)->latest();
+
+        if($assignable_role)
+            return $assignable_role;
+        else
+            return null;
+    }
+
+    /**
      * Returns the Role model from either a name or object ID.
      *
      * @param $role
