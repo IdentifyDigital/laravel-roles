@@ -60,6 +60,15 @@ trait Assignable
     {
         $search = $this->__role_factory($search);
 
+        //We'll start off by checking whether the current model has a role_id attribute
+        if(isset($this->attributes['role_id']) && !empty($this->attributes['role_id'])) {
+
+            //If so, we'll check if that given role has the $search role
+            if($this->role->hasRole($search)) {
+                return true;
+            }
+        }
+
         //Getting all the user roles for the current model.
         $allRoles = $this->roles()->wherePivot('user_group_id', $userGroupId)->get();
 
