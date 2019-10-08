@@ -91,14 +91,12 @@ trait Assignable
      *
      * @return mixed
      */
-    public function getRoleAttribute()
+    public function role()
     {
-        $assignable_role = $this->roles()->where('assignable', 1)->latest();
+        if(isset($this->attributes['role_id']) && !empty($this->attributes['role_id']))
+            return $this->hasOne(Role::class, 'role_id');
 
-        if($assignable_role)
-            return $assignable_role;
-        else
-            return null;
+        return null;
     }
 
     /**
