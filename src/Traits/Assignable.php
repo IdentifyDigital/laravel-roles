@@ -15,7 +15,7 @@ trait Assignable
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'role_relation', 'relation_id')
-            ->withPivot('relation', 'relation_id')
+            ->withPivot('relation', 'relation_id', 'user_group_id')
             ->wherePivot('relation', self::class);
     }
 
@@ -23,13 +23,15 @@ trait Assignable
      * Assigns the current model to the given role.
      *
      * @param $role
+     * @param int|null $userGroupId
      * @return array
      */
-    public function assign($role)
+    public function assign($role, $userGroupId = null)
     {
         $role = $this->__role_factory($role);
         return $this->roles()->syncWithoutDetaching([$role->getKey() => [
-            'relation' => self::class
+            'relation' => self::class,
+            'user_group_id' => $userGroupId
         ]]);
     }
 
@@ -37,12 +39,13 @@ trait Assignable
      * Revokes the given role from the current model.
      *
      * @param $role
+     * @param int|null $userGroupId
      * @return int
      */
-    public function revoke($role)
+    public function revoke($role, $userGroupId = null)
     {
         $role = $this->__role_factory($role);
-        return $this->roles()->detach($role);
+        return $this->roles()->wherePivot('user_group_id', $userGroupId)->detach($role);
     }
 
     /**
@@ -50,15 +53,20 @@ trait Assignable
      *
      * @param $search
      * @param bool $direct
+     * @param int|null $userGroupId
      * @return bool
      */
-    public function hasRole($search, $direct = false)
+    public function hasRole($search, $direct = false, $userGroupId = null)
     {
         $search = $this->__role_factory($search);
 
+        //Getting all the user roles for the current model.
+        $allRoles = $this->roles()->wherePivot('user_group_id', $userGroupId)->get();
+
         //First, checking whether the model itself has the $search role directly
-        if($this->roles->contains($search))
+        if($allRoles->contains($search))
             return true;
+
         //If there is no role attached found and we are searching for direct
         //matches we should return false here
         elseif($direct === true)
@@ -66,7 +74,7 @@ trait Assignable
 
         //As we are not searching directly, we can check if any of the assigned
         //roles to this model has the $search role within
-        foreach($this->roles as $role) {
+        foreach($allRoles as $role) {
 
             //If this child role has the $search role, return true
             if($role->hasRole($search))
