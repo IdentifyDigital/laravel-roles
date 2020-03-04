@@ -2,9 +2,9 @@
 
 namespace IdentifyDigital\Roles\Exceptions\Middleware;
 
-use Exception;
+use Illuminate\Auth\AuthenticationException;
 
-class AccessDeniedException extends Exception
+class AccessDeniedException extends AuthenticationException
 {
     //
 }
