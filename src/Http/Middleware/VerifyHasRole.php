@@ -3,7 +3,7 @@
 namespace IdentifyDigital\Roles\Http\Middleware;
 
 use Closure;
-use Illuminate\Auth\AuthenticationException;
+use IdentifyDigital\Roles\Exceptions\Middleware\AccessDeniedException;
 use Illuminate\Http\Request;
 
 class VerifyHasRole
@@ -16,14 +16,14 @@ class VerifyHasRole
      * @param array $roles
      * @return void
      *
-     * @throws AuthenticationException
+     * @throws AccessDeniedException
      */
     public function handle($request, Closure $next, ...$roles)
     {
         if($this->validate($request, $roles))
             return $next($request);
 
-        throw new AuthenticationException(
+        throw new AccessDeniedException(
             'Unauthenticated.', [], $this->redirectTo($request)
         );
     }
