@@ -35,7 +35,7 @@ class VerifyHasRole
      * @param array $roles
      * @return bool
      */
-    private function validate(Request $request, array $roles)
+    protected function validate(Request $request, array $roles)
     {
         $user = $request->user();
 
