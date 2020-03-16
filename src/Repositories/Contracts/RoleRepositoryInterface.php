@@ -7,4 +7,6 @@ use IdentifyDigital\Repositories\RepositoryInterface;
 interface RoleRepositoryInterface extends RepositoryInterface
 {
     public function getAllAssignableRoles();
+
+    public function getAllNoneAssignableRoles();
 }
