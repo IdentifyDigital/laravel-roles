@@ -30,7 +30,7 @@ class CreateRolesTable extends Migration
             $table->integer('relation_id')->unsigned();
             $table->integer('role_id')->unsigned();
 
-            $table->foreign('role_id')->references('id')->on('roles');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('CASCADE');
         });
     }
 
