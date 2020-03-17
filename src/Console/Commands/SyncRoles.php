@@ -44,7 +44,10 @@ class SyncRoles extends Command
         //Creating/updating any roles defined in config
         foreach($definitionsConfig as $name => $definition)
             Role::updateOrCreate(
-                ['name' => $name],
+                [
+                    'name' => $name,
+                    'user_group_id' => null
+                ],
                 [
                     'label' => $definition['label'],
                     'description' => $definition['description'],
@@ -52,7 +55,7 @@ class SyncRoles extends Command
                 ]);
 
         //Getting all the current roles now in the database
-        $roles = Role::all();
+        $roles = Role::query()->whereNull('user_group_id')->get();
         foreach($roles as $role) {
 
             //If this role doesn't exist in the config, set this to inactive

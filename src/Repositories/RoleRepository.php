@@ -5,7 +5,9 @@ namespace IdentifyDigital\Roles\Repositories;
 use IdentifyDigital\Repositories\Repository;
 use IdentifyDigital\Roles\Repositories\Contracts\RoleRepositoryInterface;
 use IdentifyDigital\Roles\Models\Role;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Str;
 
 class RoleRepository extends Repository implements RoleRepositoryInterface
 {
@@ -18,6 +20,20 @@ class RoleRepository extends Repository implements RoleRepositoryInterface
     public function model()
     {
         return Role::class;
+    }
+
+    /**
+     * Creates a new model with the given data.
+     *
+     * @param array $data
+     * @return Model
+     */
+    public function create(array $data)
+    {
+        if(!isset($data['name']))
+            $data['name'] = Str::slug($data['label']);
+
+        return parent::create($data);
     }
 
     /**
