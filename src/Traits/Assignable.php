@@ -28,7 +28,7 @@ trait Assignable
      */
     public function assign($role, $userGroupId = null)
     {
-        $role = $this->__role_factory($role);
+        $role = $this->__role_factory($role, $userGroupId);
         return $this->roles()->syncWithoutDetaching([$role->getKey() => [
             'relation' => self::class,
             'user_group_id' => $userGroupId
@@ -112,9 +112,10 @@ trait Assignable
      * Returns the Role model from either a name or object ID.
      *
      * @param $role
+     * @param $userGroupId
      * @return mixed
      */
-    private function __role_factory($role)
+    private function __role_factory($role, $userGroupId = null)
     {
         //First checking if the $role is already an object.
         if($role instanceof Role)
@@ -125,6 +126,11 @@ trait Assignable
             return Role::findOrFail($role);
 
         //Else we should search by name to find the role.
-        return Role::where('name', $role)->firstOrFail();
+        return Role::query()
+            ->where('name', $role)
+            ->when($userGroupId, function ($query, $keyword) {
+                $query->where('user_group_id', '=', $keyword);
+            })
+            ->firstOrFail();
     }
 }

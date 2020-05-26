@@ -43,6 +43,8 @@ class RoleRepository extends Repository implements RoleRepositoryInterface
      */
     public function getAllAssignableRoles()
     {
+        $this->applyCriteria();
+
         return $this->model->where('assignable', 1)->orderBy('name', 'DESC')->get();
     }
 
@@ -54,6 +56,8 @@ class RoleRepository extends Repository implements RoleRepositoryInterface
      */
     public function getAllNoneAssignableRoles()
     {
+        $this->applyCriteria();
+
         return $this->model->where('assignable', 0)->orderBy('name', 'DESC')->get();
     }
 }
