@@ -102,10 +102,7 @@ trait Assignable
      */
     public function role()
     {
-        if(isset($this->attributes['role_id']) && !empty($this->attributes['role_id']))
-            return $this->belongsTo(Role::class, 'role_id');
-
-        return null;
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
     /**
