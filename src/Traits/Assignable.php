@@ -98,14 +98,11 @@ trait Assignable
     /**
      * Returns the name of the first assignable role attached to the model.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|null
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function role()
     {
-        if(isset($this->attributes['role_id']) && !empty($this->attributes['role_id']))
-            return $this->belongsTo(Role::class, 'role_id');
-
-        return null;
+        return $this->belongsTo(Role::class, 'role_id');
     }
 
     /**
