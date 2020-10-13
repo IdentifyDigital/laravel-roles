@@ -64,7 +64,7 @@ trait Assignable
         if(isset($this->attributes['role_id']) && !empty($this->attributes['role_id'])) {
             
             //If we can check straight away for a simple "role has role" relation we will do
-            if($this->role()->whereHas('roles', function (Builder $query) use ($search) {
+            if($this->role()->whereHas('roles', function ($query) use ($search) {
                 $query->where('name', '=', $search->name);
             })->exists())
                 return true;
