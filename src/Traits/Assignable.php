@@ -62,7 +62,13 @@ trait Assignable
 
         //We'll start off by checking whether the current model has a role_id attribute
         if(isset($this->attributes['role_id']) && !empty($this->attributes['role_id'])) {
-
+            
+            //If we can check straight away for a simple "role has role" relation we will do
+            if($this->role()->whereHas('roles', function ($query) use ($search) {
+                $query->where('name', '=', $search->name);
+            })->exists())
+                return true;
+            
             //If so, we'll check if that given role has the $search role
             if($this->role->hasRole($search)) {
                 return true;
@@ -98,7 +104,7 @@ trait Assignable
     /**
      * Returns the name of the first assignable role attached to the model.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|null
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function role()
     {
