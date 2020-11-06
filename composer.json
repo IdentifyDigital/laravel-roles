@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "identifydigital/laravel-repositories": "^1.0.0"
+        "identifydigital/laravel-repositories": "1.*"
     },
     "extra": {
         "laravel": {
