@@ -58,22 +58,22 @@ trait Assignable
      */
     public function hasRole($search, $direct = false, $userGroupId = null)
     {
-        $search = $this->__role_factory($search);
-
         //We'll start off by checking whether the current model has a role_id attribute
         if(isset($this->attributes['role_id']) && !empty($this->attributes['role_id'])) {
-            
+
             //If we can check straight away for a simple "role has role" relation we will do
             if($this->role()->whereHas('roles', function ($query) use ($search) {
-                $query->where('name', '=', $search->name);
+                if($search instanceof Role)
+                    $query->where('name', '=', $search->name);
+                elseif(is_numeric($search))
+                    $query->where('roles.id', '=', $search);
+                else
+                    $query->where('name', '=', $search);
             })->exists())
                 return true;
-            
-            //If so, we'll check if that given role has the $search role
-            if($this->role->hasRole($search)) {
-                return true;
-            }
         }
+
+        $search = $this->__role_factory($search);
 
         //Getting all the user roles for the current model.
         $allRoles = $this->roles()->wherePivot('user_group_id', $userGroupId)->get();
