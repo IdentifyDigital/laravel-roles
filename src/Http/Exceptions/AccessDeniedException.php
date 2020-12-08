@@ -1,6 +1,6 @@
 <?php
 
-namespace IdentifyDigital\Roles\Exceptions\Middleware;
+namespace IdentifyDigital\Roles\Http\Exceptions;
 
 use Illuminate\Auth\AuthenticationException;
 
